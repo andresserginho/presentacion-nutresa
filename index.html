@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo Nutresa - Presentación Triple Bottom Line | SENA GAES</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        if (window.tailwind) {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            nutresa: {
+                                green: '#3FA637',
+                                dark: '#0A522C',
+                                deep: '#020D06',
+                                gold: '#C8963E',
+                                light: '#EAF5E9'
+                            }
+                        },
+                        boxShadow: {
+                            'neon-green': '0 0 35px rgba(63, 166, 55, 0.5)',
+                            'neon-gold': '0 0 35px rgba(200, 150, 62, 0.5)',
+                            'panel-3d': '0 30px 60px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.25)',
+                            'card-3d': '0 10px 25px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.2)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #020D06;
+            color: #ffffff;
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+        .glass-panel-3d {
+            background: linear-gradient(135deg, rgba(10, 82, 44, 0.82) 0%, rgba(3, 20, 10, 0.92) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(63, 166, 55, 0.45);
+            transform: perspective(1000px) rotateX(1deg);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 2px 4px rgba(255,255,255,0.25);
+        }
+        .glass-card-3d {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(63, 166, 55, 0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.15);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .glass-card-3d:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(63, 166, 55, 0.8);
+        }
+        .glass-gold-3d {
+            background: linear-gradient(135deg, rgba(200, 150, 62, 0.22) 0%, rgba(50, 35, 10, 0.4) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 150, 62, 0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.2);
+        }
+        .bg-grid-3d {
+            background-image: radial-gradient(rgba(63, 166, 55, 0.3) 2px, transparent 2px);
+            background-size: 40px 40px;
+        }
+        .slide-item {
+            display: none !important;
+            width: 100%;
+            height: 100%;
+        }
+        .slide-item.active {
+            display: flex !important;
+            animation: fadeIn3D 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeIn3D {
+            from { opacity: 0; transform: translateY(15px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .carousel-card {
+            display: none !important;
+            width: 100%;
+            height: 100%;
+        }
+        .carousel-card.active {
+            display: flex !important;
+            animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .carousel-card-env {
+            display: none !important;
+            width: 100%;
+            height: 100%;
+        }
+        .carousel-card-env.active {
+            display: flex !important;
+            animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px) scale(0.97); }
+            to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+        .nav-btn-side {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 60;
+            background: rgba(2, 13, 6, 0.9);
+            border: 2px solid #3FA637;
+            color: #ffffff;
+            padding: 18px 14px;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 0 25px rgba(63, 166, 55, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            user-select: none;
+        }
+        .nav-btn-side:hover {
+            background: #3FA637;
+            color: #020D06;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 35px rgba(63, 166, 55, 0.8);
+        }
+        .nav-btn-prev { left: 16px; }
+        .nav-btn-next { right: 16px; }
+
+        /* Estilos Metaverso Diapositiva 10/9 (GRACIAS) */
+        .metaverse-text-3d {
+            font-size: 8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #ffffff;
+            letter-spacing: -0.05em;
+            position: relative;
+            transform: perspective(1000px) rotateY(-10deg) rotateX(10deg);
+            text-shadow: 
+                0 1px 0 #ccc,
+                0 2px 0 #c9c9c9,
+                0 3px 0 #bbb,
+                0 4px 0 #b9b9b9,
+                0 5px 0 #aaa,
+                0 6px 1px rgba(0,0,0,.1),
+                0 0 5px rgba(200, 150, 62, 0.3),
+                0 1px 3px rgba(0,0,0,.3),
+                0 3px 5px rgba(0,0,0,.2),
+                0 5px 10px rgba(0,0,0,.25),
+                0 10px 10px rgba(0,0,0,.2),
+                0 20px 20px rgba(0,0,0,.15);
+            animation: floatText 5s ease-in-out infinite;
+        }
+        
+        .metaverse-vortex {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: conic-gradient(from 180deg at 50% 50%, #020D06 0%, #3FA637 25%, #020D06 50%, #C8963E 75%, #020D06 100%);
+            border-radius: 50%;
+            filter: blur(100px) opacity(0.15);
+            animation: spinVortex 12s linear infinite;
+            z-index: -1;
+        }
+
+        .metaverse-particle {
+            position: absolute;
+            background: #3FA637;
+            border-radius: 50%;
+            opacity: 0.6;
+            filter: blur(2px);
+            animation: floatParticles 8s linear infinite;
+        }
+
+        @keyframes spinVortex { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+        @keyframes floatText { 0% { transform: perspective(1000px) rotateY(-10deg) rotateX(10deg) translateY(0px); } 50% { transform: perspective(1000px) rotateY(-5deg) rotateX(5deg) translateY(-20px); } 100% { transform: perspective(1000px) rotateY(-10deg) rotateX(10deg) translateY(0px); } }
+        @keyframes floatParticles { 0% { transform: translateY(0px) translateX(0px); } 25% { transform: translateY(-30px) translateX(20px); } 50% { transform: translateY(-60px) translateX(-20px); } 75% { transform: translateY(-30px) translateX(20px); } 100% { transform: translateY(0px) translateX(0px); } }
+
+    </style>
+</head>
+<body class="bg-nutresa-deep text-white font-sans antialiased overflow-hidden h-screen w-screen flex flex-col">
+
+    <!-- Header / Navbar Superior HD -->
+    <header class="h-16 bg-[#0A522C]/95 border-b border-[#3FA637]/40 px-6 flex items-center justify-between z-50 shrink-0 shadow-lg">
+        <div class="flex items-center gap-3">
+            <img src="logo.svg" alt="Nutresa Logo" class="h-10 w-auto rounded-full bg-white/10 p-0.5 border border-[#3FA637]/50 shadow-neon-green">
+            <div>
+                <span class="font-bold text-base tracking-wider text-white drop-shadow">GRUPO NUTRESA</span>
+                <span class="text-xs text-[#3FA637] block font-medium">GAES: Juan Ramírez • Paula Blanco • Sergio Vásquez</span>
+            </div>
+        </div>
+
+        <!-- Controles de Diapositivas HD (Funcionan para las 10 diapos) -->
+        <div class="flex items-center gap-4 bg-black/70 px-5 py-1.5 rounded-full border border-[#3FA637]/50 shadow-neon-green">
+            <button onclick="navigateSlide(-1)" class="p-1 text-white hover:text-[#3FA637] transition-colors cursor-pointer text-lg font-bold" aria-label="Anterior">◄</button>
+            <span class="text-base font-bold tracking-widest text-white"><span id="currentSlideIdx">1</span> / <span id="totalSlidesCount">9</span></span>
+            <button onclick="navigateSlide(1)" class="p-1 text-white hover:text-[#3FA637] transition-colors cursor-pointer text-lg font-bold" aria-label="Siguiente">►</button>
+        </div>
+
+        <div class="text-xs text-gray-300 hidden md:block">
+            Estrategia Triple Bottom Line <span class="text-[#C8963E] font-bold">SENA</span>
+        </div>
+    </header>
+
+    <!-- Botones Laterales 3D HD -->
+    <button onclick="navigateSlide(-1)" class="nav-btn-side nav-btn-prev" title="Página Anterior">
+        <span class="text-xl">◄</span>
+        <span class="hidden sm:inline text-xs uppercase tracking-wider">Ant</span>
+    </button>
+    <button onclick="navigateSlide(1)" class="nav-btn-side nav-btn-next" title="Página Siguiente">
+        <span class="hidden sm:inline text-xs uppercase tracking-wider">Sig</span>
+        <span class="text-xl">►</span>
+    </button>
+
+    <!-- Área de Trabajo Principal 3D HD -->
+    <main class="flex-1 relative bg-grid-3d flex items-center justify-center p-4 sm:p-8 overflow-hidden">
+        
+        <!-- Luces Ambientales 3D Dinámicas -->
+        <div class="absolute top-1/4 left-1/5 w-[420px] h-[420px] bg-[#3FA637]/25 rounded-full blur-[150px] pointer-events-none animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/5 w-[420px] h-[420px] bg-[#C8963E]/20 rounded-full blur-[160px] pointer-events-none"></div>
+
+        <!-- CONTENEDOR 3D GLASS PRINCIPAL -->
+        <div id="presentationViewport" class="w-full max-w-5xl h-full max-h-[85vh] glass-panel-3d rounded-3xl relative overflow-y-auto flex flex-col p-6 sm:p-10">
+
+            <!-- SLIDE 1: PORTADA -->
+            <div class="slide-item active flex-col justify-between h-full" id="slide-1">
+                <div class="flex justify-between items-start">
+                    <img src="logo-f.svg" alt="Grupo Nutresa Oficial" class="h-20 w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]">
+                    <img src="nutresa.jpg" alt="Logo Nutresa" class="h-12 rounded-xl shadow-lg border border-[#3FA637]/40 object-contain bg-white/10 p-1">
+                </div>
+                
+                <div class="space-y-4 my-auto">
+                    <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#C8963E]/25 border border-[#C8963E]/60 text-[#C8963E] text-sm font-bold shadow-neon-gold">
+                        <span>🌿</span> SOSTENIBILIDAD & CAPITALISMO CONSCIENTE
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-md">
+                        GRUPO <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#3FA637] via-emerald-300 to-green-100">NUTRESA S.A.</span>
+                    </h1>
+                    <p class="text-sm sm:text-base text-gray-200 max-w-2xl font-light leading-relaxed">
+                        Modelo de desarrollo sostenible, triple cuenta de resultados y buenas prácticas ambientales en el sector agroindustrial colombiano.
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-2 text-xs">
+                        <span class="px-4 py-2 rounded-xl bg-black/60 border border-[#3FA637]/40 font-semibold text-sm shadow-card-3d text-[#3FA637]">Juan Ramírez</span>
+                        <span class="px-4 py-2 rounded-xl bg-black/60 border border-[#3FA637]/40 font-semibold text-sm shadow-card-3d text-[#3FA637]">Paula Blanco</span>
+                        <span class="px-4 py-2 rounded-xl bg-black/60 border border-[#3FA637]/40 font-semibold text-sm shadow-card-3d text-[#3FA637]">Sergio Vásquez</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between border-t border-white/15 pt-3 text-xs text-gray-400">
+                    <span>Guía de Aprendizaje SENA (GFPI-F-135 V04)</span>
+                    <span>Entorno 3D Inmersivo HD</span>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: VIDEO DE PRESENTACIÓN INICIAL (Video 1) -->
+            <div class="slide-item flex-col justify-between h-full" id="slide-2">
+                <div>
+                    <span class="text-xs uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#3FA637]/25 border border-[#3FA637]/50 text-[#3FA637] font-semibold shadow-card-3d">Paso 2: Contextualización Inicial</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2 drop-shadow">El Futuro que Construimos (#ENTRETODOS)</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center my-auto">
+                    <div class="md:col-span-5 space-y-3">
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                            Video institucional de presentación corporativa donde se visualiza el compromiso colectivo, la cultura organizacional y la magnitud de Grupo Nutresa en el mercado.
+                        </p>
+                        <div class="p-3.5 rounded-2xl glass-card-3d text-xs text-[#3FA637] font-medium">
+                            📌 Expone el equipo sobre la identidad corporativa antes de entrar en materia técnica.
+                        </div>
+                    </div>
+                    <div class="md:col-span-7 bg-black/85 rounded-2xl p-2.5 border border-[#3FA637]/50 shadow-neon-green flex justify-center">
+                        <video controls class="w-full max-h-[260px] rounded-xl object-contain">
+                            <source src="video1.mp4" type="video/mp4">
+                            Tu navegador no soporta la reproducción de video.
+                        </video>
+                    </div>
+                </div>
+
+                <div class="text-xs text-gray-400 text-center">Video 1: Contexto general de la organización y su gente.</div>
+            </div>
+
+            <!-- SLIDE 3: VIDEO CASO NUTRESA & CAPITALISMO CONSCIENTE (Video 0) -->
+            <div class="slide-item flex-col justify-between h-full" id="slide-3">
+                <div>
+                    <span class="text-xs uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#C8963E]/25 border border-[#C8963E]/50 text-[#C8963E] font-semibold shadow-card-3d">Análisis Especial</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2 drop-shadow">Capitalismo Consciente en Acción</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center my-auto">
+                    <div class="md:col-span-5 space-y-3">
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                            Análisis estratégico del caso Nutresa bajo la perspectiva del capitalismo consciente y la gestión gerencial sostenible orientada al valor compartido.
+                        </p>
+                        <div class="p-3.5 rounded-2xl glass-gold-3d text-xs text-[#C8963E] font-medium">
+                            💡 Enfoque: Cómo la visión directiva impacta positivamente el entorno socioeconómico.
+                        </div>
+                    </div>
+                    <div class="md:col-span-7 bg-black/85 rounded-2xl p-2.5 border border-[#C8963E]/50 shadow-neon-gold flex justify-center">
+                        <video controls class="w-full max-h-[260px] rounded-xl object-contain">
+                            <source src="video0.mp4" type="video/mp4">
+                            Tu navegador no soporta video local.
+                        </video>
+                    </div>
+                </div>
+
+                <div class="text-xs text-gray-400 text-center">Video 0: Perspectiva analítica y modelo de gestión.</div>
+            </div>
+
+            <!-- SLIDE 4: ACTIVIDAD ECONÓMICA Y PRODUCTOS -->
+            <div class="slide-item flex-col justify-between h-full" id="slide-4">
+                <div>
+                    <span class="text-xs uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#3FA637]/25 border border-[#3FA637]/50 text-[#3FA637] font-semibold shadow-card-3d">Paso 3: Perfil Productivo</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2 drop-shadow">Actividad Económica & Sector</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center my-auto">
+                    <div class="md:col-span-6 space-y-3.5">
+                        <div class="p-4 rounded-2xl glass-card-3d">
+                            <span class="text-xs text-[#3FA637] font-bold uppercase">Sector Productivo:</span>
+                            <p class="text-xs sm:text-sm text-white font-semibold mt-1">Alimentos y Consumo Masivo / Agroindustrial.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl glass-card-3d">
+                            <span class="text-xs text-[#3FA637] font-bold uppercase">Actividad Principal:</span>
+                            <p class="text-xs text-gray-300 leading-relaxed mt-1">
+                                Producción, comercialización y distribución de alimentos (cárnicos, galletas, chocolates, café, helados y pastas). Modelo centrado en las personas, ética, innovación y sostenibilidad de la cadena de valor.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="md:col-span-6 flex justify-center">
+                        <div class="p-3 rounded-2xl glass-card-3d shadow-neon-green max-w-sm w-full text-center">
+                            <img src="productos_nutre.png" alt="Portafolio de Productos Nutresa" class="w-full h-auto rounded-xl object-contain max-h-[210px] mx-auto drop-shadow-md">
+                            <p class="text-[11px] text-gray-300 mt-2 font-medium">Portafolio comercial y marcas líderes en hogares.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-xs text-gray-400 text-center">Diversificación de canales y presencia en mercados internacionales.</div>
+            </div>
+
+            <!-- SLIDE 5: PILAR ECONÓMICO -->
+            <div class="slide-item flex-col justify-between h-full" id="slide-5">
+                <div>
+                    <span class="text-xs uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#C8963E]/25 border border-[#C8963E]/50 text-[#C8963E] font-semibold shadow-card-3d">Paso 4A: Triple Bottom Line</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2 drop-shadow">Pilar Económico: Viabilidad & Rentabilidad</h2>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 my-auto">
+                    <div class="glass-gold-3d p-4 rounded-2xl text-center border-t-4 border-t-[#C8963E] flex flex-col justify-between">
+                        <span class="text-3xl font-extrabold text-[#C8963E] drop-shadow">65%</span>
+                        <p class="text-xs text-gray-200 mt-2 font-medium">Aporte de marcas líderes al crecimiento en ventas</p>
+                    </div>
+                    <div class="glass-gold-3d p-4 rounded-2xl text-center border-t-4 border-t-[#C8963E] flex flex-col justify-between">
+                        <span class="text-3xl font-extrabold text-[#C8963E] drop-shadow">5,2%</span>
+                        <p class="text-xs text-gray-200 mt-2 font-medium">Ingresos derivados por canales digitales</p>
+                    </div>
+                    <div class="glass-gold-3d p-4 rounded-2xl text-center border-t-4 border-t-[#C8963E] flex flex-col justify-between">
+                        <span class="text-3xl font-extrabold text-[#C8963E] drop-shadow">100,9%</span>
+                        <p class="text-xs text-gray-200 mt-2 font-medium">Cumplimiento del plan de geografías</p>
+                    </div>
+                    <div class="glass-gold-3d p-4 rounded-2xl text-center border-t-4 border-t-[#C8963E] flex flex-col justify-between">
+                        <span class="text-3xl font-extrabold text-[#C8963E] drop-shadow">11,3%</span>
+                        <p class="text-xs text-gray-200 mt-2 font-medium">Retorno ROIC sobre capital invertido</p>
+                    </div>
+                    <div class="glass-gold-3d p-4 rounded-2xl text-center border-t-4 border-t-[#C8963E] flex flex-col justify-between col-span-2 sm:col-span-1">
+                        <span class="text-3xl font-extrabold text-[#C8963E] drop-shadow">89,4%</span>
+                        <p class="text-xs text-gray-200 mt-2 font-medium">Índice de satisfacción de clientes en Colombia</p>
+                    </div>
+                </div>
+
+                <div class="text-xs text-gray-400 text-center">Generación de valor mediante eficiencia operativa y canales comerciales sólidos.</div>
+            </div>
+
+            <!-- SLIDE 6: PILAR SOCIAL (CARRUSEL SOCIAL CORREGIDO SIN CITES) -->
+            <div class="slide-item flex-col justify-between h-full" id="slide-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#3FA637]/25 border border-[#3FA637]/50 text-[#3FA637] font-semibold shadow-card-3d">Paso 4B: Triple Bottom Line</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1 drop-shadow">Pilar Social: Bienestar y Comunidad</h2>
+                    </div>
+                    <div class="flex items-center gap-2 bg-black/60 px-4 py-1.5 rounded-full border border-[#3FA637]/40 text-xs font-bold text-[#3FA637]">
+                        <span>Iniciativa <span id="carouselCardIdx">1</span> de 4</span>
+                    </div>
+                </div>
+
+                <div class="my-auto relative w-full max-w-3xl mx-auto h-[290px] rounded-3xl overflow-hidden border-2 border-[#3FA637]/50 shadow-neon-green">
+                    <div class="carousel-card active relative flex-col justify-end" id="car-card-1">
+                        <img src="bienestar.jpg" alt="Bienestar de Colaboradores" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent p-6 flex flex-col justify-end">
+                            <span class="text-xs text-[#3FA637] font-bold uppercase tracking-wider mb-1">1. BIENESTAR DE COLABORADORES</span>
+                            <h3 class="text-2xl font-extrabold text-white drop-shadow">$224.253 Millones invertidos (2024)</h3>
+                            <p class="text-sm text-gray-200 mt-1 leading-relaxed">
+                                Calidad de vida, salud mental, formación y equilibrio personal. Fomenta la inclusión y el crecimiento profesional continuo.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="carousel-card relative flex-col justify-end" id="car-card-2">
+                        <img src="educacion.jpg" alt="Educación y Comunidades" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent p-6 flex flex-col justify-end">
+                            <span class="text-xs text-[#3FA637] font-bold uppercase tracking-wider mb-1">2. EDUCACIÓN Y DESARROLLO COMUNITARIO</span>
+                            <h3 class="text-2xl font-extrabold text-white drop-shadow">99 Becas Universitarias Entregadas</h3>
+                            <p class="text-sm text-gray-200 mt-1 leading-relaxed">
+                                Facilita el acceso de jóvenes colombianos a la educación superior mediante el programa de Becas Nutresa.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="carousel-card relative flex-col justify-end" id="car-card-3">
+                        <img src="bancoalimentos.jpg" alt="Seguridad Alimentaria" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent p-6 flex flex-col justify-end">
+                            <span class="text-xs text-[#3FA637] font-bold uppercase tracking-wider mb-1">3. SALUD Y SEGURIDAD ALIMENTARIA</span>
+                            <h3 class="text-2xl font-extrabold text-white drop-shadow">1.793 Toneladas de Alimentos Donadas</h3>
+                            <p class="text-sm text-gray-200 mt-1 leading-relaxed">
+                                Donaciones masivas a bancos de alimentos, beneficiando a más de 1,5 millones de personas vulnerables.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="carousel-card relative flex-col justify-end" id="car-card-4">
+                        <img src="voluntariado.jpg" alt="Voluntariado Corporativo" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent p-6 flex flex-col justify-end">
+                            <span class="text-xs text-[#3FA637] font-bold uppercase tracking-wider mb-1">4. VOLUNTARIADO Y COMPROMISO SOCIAL</span>
+                            <h3 class="text-2xl font-extrabold text-white drop-shadow">15.807 Colaboradores en Voluntariado</h3>
+                            <p class="text-sm text-gray-200 mt-1 leading-relaxed">
+                                Participación activa en iniciativas comunitarias, apoyo a emprendedores y fortalecimiento del tejido social.
+                            </p>
+                        </div>
+                    </div>
+
+                    <button onclick="navigateCarousel(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-[#3FA637] text-white hover:text-black p-3 rounded-full border border-white/20 transition-all font-bold text-lg shadow-lg">◄</button>
+                    <button onclick="navigateCarousel(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-[#3FA637] text-white hover:text-black p-3 rounded-full border border-white/20 transition-all font-bold text-lg shadow-lg">►</button>
+                </div>
+
+                <div class="flex justify-center items-center gap-2">
+                    <button onclick="setCarouselCard(1)" id="dot-1" class="w-3 h-3 rounded-full bg-[#3FA637] transition-all"></button>
+                    <button onclick="setCarouselCard(2)" id="dot-2" class="w-3 h-3 rounded-full bg-white/30 transition-all"></button>
+                    <button onclick="setCarouselCard(3)" id="dot-3" class="w-3 h-3 rounded-full bg-white/30 transition-all"></button>
+                    <button onclick="setCarouselCard(4)" id="dot-4" class="w-3 h-3 rounded-full bg-white/30 transition-all"></button>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: PILAR AMBIENTAL (CARRUSEL AMBIENTAL CORREGIDO SIN CITES) -->
+            <div class="slide-item flex-col justify-between h-full" id="slide-7">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest px-3.5 py-1 rounded-full bg-emerald-500/25 border border-emerald-500/50 text-emerald-400 font-semibold shadow-card-3d">Paso 4C: Triple Bottom Line</span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1 drop-shadow">Pilar Ambiental: Ecoeficiencia & Metas 2030</h2>
+                    </div>
+                    <div class="flex items-center gap-2 bg-black/60 px-4 py-1.5 rounded-full border border-emerald-500/40 text-xs font-bold text-emerald-400">
+                        <span>Meta Ambiental <span id="envCardIdx">1</span> de 4</span>
+                    </div>
+                </div>
+
+                <div class="my-auto relative w-full max-w-3xl mx-auto h-[290px] rounded-3xl overflow-hidden border-2 border-emerald-500/50 shadow-neon-green">
+                    <div class="carousel-card-env active relative flex-col justify-end" id="env-card-1">
+                        <img src="ambiental1.jpg" alt="Descarbonización y Movilidad" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent p-6 flex flex-col justify-end">
+                            <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider mb-1">1. DESCARBONIZACIÓN Y ENERGÍA</span>
+                            <h3 class="text-2xl font-extrabold text-white drop-shadow">Meta 2030: Reducir 40% Emisiones GEI</h3>
+                            <p class="text-sm text-gray-200 mt-1 leading-relaxed">
+                                Uso de paneles solares, calderas de biomasa, flotas de vehículos eléctricos y marcas 100% carbono neutrales (como Tosh y Evok).
+                            </p>
+                        </div>
+                    </div>
+                    <div class="carousel-card-env relative flex-col justify-end" id="env-card-2">
+                        <img src="ambiental2.jpg" alt="Economía Circular" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent p-6 flex flex-col justify-end">
+                            <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider mb-1">2. ECONOMÍA CIRCULAR Y EMPAQUES</span>
+                            <h3 class="text-2xl font-extrabold text-white drop-shadow">90% de Empaques Bajo Ecodiseño</h3>
+                            <p class="text-sm text-gray-200 mt-1 leading-relaxed">
+                                Diseñados para ser reciclables o compostables. Más del 90% de los residuos industriales son valorizados y aprovechados.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="carousel-card-env relative flex-col justify-end" id="env-card-3">
+                        <img src="ambiental3.jpg" alt="Eficiencia Hídrica" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent p-6 flex flex-col justify-end">
+                            <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider mb-1">3. EFICIENCIA HÍDRICA Y CUENCAS</span>
+                            <h3 class="text-2xl font-extrabold text-white drop-shadow">Vertimiento Cero y Protección de Páramos</h3>
+                            <p class="text-sm text-gray-200 mt-1 leading-relaxed">
+                                Tecnologías avanzadas de recirculación de agua y financiación activa en la conservación de cuencas hidrográficas y páramos andinos.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="carousel-card-env relative flex-col justify-end" id="env-card-4">
+                        <img src="ambiental4.jpg" alt="Agricultura Sostenible" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent p-6 flex flex-col justify-end">
+                            <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider mb-1">4. ABASTECIMIENTO Y BIODIVERSIDAD</span>
+                            <h3 class="text-2xl font-extrabold text-white drop-shadow">Cadenas Libres de Deforestación</h3>
+                            <p class="text-sm text-gray-200 mt-1 leading-relaxed">
+                                Fomento de la agricultura regenerativa y silvopastoreo en cultivos clave como cacao, café y palma para proteger la biodiversidad.
+                            </p>
+                        </div>
+                    </div>
+
+                    <button onclick="navigateEnvCarousel(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-emerald-500 text-white hover:text-black p-3 rounded-full border border-white/20 transition-all font-bold text-lg shadow-lg">◄</button>
+                    <button onclick="navigateEnvCarousel(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-emerald-500 text-white hover:text-black p-3 rounded-full border border-white/20 transition-all font-bold text-lg shadow-lg">►</button>
+                </div>
+
+                <div class="flex justify-center items-center gap-2">
+                    <button onclick="setEnvCard(1)" id="env-dot-1" class="w-3 h-3 rounded-full bg-emerald-400 transition-all"></button>
+                    <button onclick="setEnvCard(2)" id="env-dot-2" class="w-3 h-3 rounded-full bg-white/30 transition-all"></button>
+                    <button onclick="setEnvCard(3)" id="env-dot-3" class="w-3 h-3 rounded-full bg-white/30 transition-all"></button>
+                    <button onclick="setEnvCard(4)" id="env-dot-4" class="w-3 h-3 rounded-full bg-white/30 transition-all"></button>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: CONCLUSIONES Y APRENDIZAJES (GAES) -->
+            <div class="slide-item flex-col justify-between h-full" id="slide-8">
+                <div>
+                    <span class="text-xs uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#C8963E]/25 border border-[#C8963E]/50 text-[#C8963E] font-semibold shadow-card-3d">Paso 5: Reflexión Ética</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2 drop-shadow">Conclusiones & Aprendizajes</h2>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-gradient-to-r from-[#0A522C] to-black border border-[#3FA637]/50 space-y-3 my-auto shadow-neon-green">
+                    <div class="flex items-start gap-3">
+                        <span class="text-3xl text-[#C8963E]">“</span>
+                        <p class="text-xs sm:text-sm text-gray-200 leading-relaxed italic">
+                            El análisis de Grupo Nutresa nos enseña como GAES que la optimización de recursos (agua, energía, empaques) no es solo un deber ambiental, sino una estrategia de rentabilidad a largo plazo. Comprendemos la importancia ética de aplicar el modelo Triple Bottom Line en el entorno productivo real para generar valor compartido y sostenible.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3 text-center text-xs text-gray-300">
+                    <div class="p-3 rounded-2xl glass-card-3d text-[#3FA637] font-bold">Conciencia Ambiental</div>
+                    <div class="p-3 rounded-2xl glass-card-3d text-[#C8963E] font-bold">Eficiencia de Recursos</div>
+                    <div class="p-3 rounded-2xl glass-card-3d text-emerald-400 font-bold">Responsabilidad Ética</div>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: BIBLIOGRAFÍA Y WEBGRAFÍA -->
+            <div class="slide-item flex-col justify-between h-full" id="slide-9">
+                <div>
+                    <span class="text-xs uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#3FA637]/25 border border-[#3FA637]/50 text-[#3FA637] font-semibold shadow-card-3d">Paso 6: Fuentes Oficiales</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white mt-2 drop-shadow">Bibliografía & Webgrafía</h2>
+                </div>
+
+                <div class="space-y-2.5 my-auto text-xs text-gray-300">
+                    <div class="p-3.5 rounded-2xl glass-card-3d flex justify-between items-center">
+                        <span>1. Grupo Nutresa S. A. (2025). <em>Informe de Sostenibilidad 2024</em>. Documento oficial.</span>
+                        <span class="text-[#3FA637] font-mono text-xs font-bold shrink-0 ml-2">PDF Oficial</span>
+                    </div>
+                    <div class="p-3.5 rounded-2xl glass-card-3d flex justify-between items-center">
+                        <span>2. Grupo Nutresa S. A. (2025). <em>Desarrollo territorial e inclusión social</em>. Informe de sostenibilidad.</span>
+                        <span class="text-[#3FA637] font-mono text-xs font-bold shrink-0 ml-2">Informe</span>
+                    </div>
+                    <div class="p-3.5 rounded-2xl glass-card-3d flex justify-between items-center">
+                        <span>3. Grupo Nutresa S. A. (2025). <em>Avance en indicadores de gestión en sostenibilidad 2024</em>.</span>
+                        <span class="text-[#3FA637] font-mono text-xs font-bold shrink-0 ml-2">Resumen</span>
+                    </div>
+                    <div class="p-3.5 rounded-2xl glass-card-3d flex justify-between items-center">
+                        <span>4. Portal corporativo oficial Grupo Nutresa. (https://gruponutresa.com/)</span>
+                        <span class="text-[#C8963E] font-mono text-xs font-bold shrink-0 ml-2">Web</span>
+                    </div>
+                    <div class="p-3.5 rounded-2xl glass-card-3d flex justify-between items-center">
+                        <span>5. Video Nutresa - Link oficial de apoyo (https://youtu.be/TVzgNdHx7g4)</span>
+                        <span class="text-[#C8963E] font-mono text-xs font-bold shrink-0 ml-2">YouTube</span>
+                    </div>
+                </div>
+
+                <div class="text-xs text-gray-400 text-center">
+                    Web creada para fines educativos • SENA GAES (Juan Ramírez, Paula Blanco, Sergio Vásquez)
+                </div>
+            </div>
+
+            <!-- SLIDE 10: EXPERIENCIA FINAL (GRACIAS) 3D INMERSIVA TIPO METAVERSO OFFLINE -->
+            <div class="slide-item flex-col justify-center items-center h-full relative overflow-hidden bg-[#020D06]" id="slide-10">
+                <!-- Vórtice de Metaverso Girable -->
+                <div class="metaverse-vortex top-1/2 left-1/2"></div>
+                
+                <!-- Partículas Flotantes -->
+                <div class="metaverse-particle w-3 h-3 top-1/4 left-1/4"></div>
+                <div class="metaverse-particle w-4 h-4 bottom-1/3 right-1/4 animate-delay-1000"></div>
+                <div class="metaverse-particle w-2 h-2 top-1/2 right-1/3 animate-delay-2000"></div>
+                <div class="metaverse-particle w-5 h-5 bottom-1/4 left-1/3 animate-delay-3000"></div>
+
+                <!-- Título Monumental 3D Flotante -->
+                <div class="metaverse-text-3d drop-shadow-2xl">GRACIAS</div>
+
+                <!-- Firma GAES Final -->
+                <div class="mt-10 px-6 py-2 rounded-xl bg-black/70 border border-[#3FA637]/40 shadow-neon-green">
+                    <span class="text-xs font-medium text-white tracking-widest uppercase">Sostenibilidad y Futuro Nutresa • SENA GAES Four</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Script JavaScript Robusto con Navegación para 10 Diapositivas y Carruseles -->
+    <script>
+        var currentSlide = 1;
+        var totalSlides = 10; // Actualizado a 10 diapos
+        
+        // Estado Carrusel Social (Diapositiva 6)
+        var currentCarouselCard = 1;
+        var totalCarouselCards = 4;
+
+        // Estado Carrusel Ambiental (Diapositiva 7)
+        var currentEnvCard = 1;
+        var totalEnvCards = 4;
+
+        function renderSlide() {
+            var slides = document.querySelectorAll('.slide-item');
+            for (var i = 0; i < slides.length; i++) {
+                if ((i + 1) === currentSlide) {
+                    slides[i].classList.add('active');
+                } else {
+                    slides[i].classList.remove('active');
+                }
+            }
+            // Actualizar contador superior (max 9 para el contenido principal)
+            var counter = document.getElementById('currentSlideIdx');
+            if (counter) {
+                // Si estamos en la diapo 10, muestra "FINAL"
+                if (currentSlide === 10) {
+                    counter.innerText = "FINAL";
+                    counter.parentElement.classList.add('border-nutresa-gold');
+                    counter.parentElement.classList.remove('border-nutresa-green/40');
+                } else {
+                    counter.innerText = currentSlide;
+                    counter.parentElement.classList.remove('border-nutresa-gold');
+                    counter.parentElement.classList.add('border-nutresa-green/40');
+                }
+            }
+            // El total siempre muestra 9 para el contenido principal
+            var totalCount = document.getElementById('totalSlidesCount');
+            if (totalCount) totalCount.innerText = "9";
+
+            var viewport = document.getElementById('presentationViewport');
+            if (viewport) viewport.scrollTop = 0;
+        }
+
+        function navigateSlide(direction) {
+            // Control carrusel Social en diapo 6
+            if (currentSlide === 6 && direction === 1 && currentCarouselCard < totalCarouselCards) {
+                navigateCarousel(1);
+                return;
+            }
+            if (currentSlide === 6 && direction === -1 && currentCarouselCard > 1) {
+                navigateCarousel(-1);
+                return;
+            }
+
+            // Control carrusel Ambiental en diapo 7
+            if (currentSlide === 7 && direction === 1 && currentEnvCard < totalEnvCards) {
+                navigateEnvCarousel(1);
+                return;
+            }
+            if (currentSlide === 7 && direction === -1 && currentEnvCard > 1) {
+                navigateEnvCarousel(-1);
+                return;
+            }
+
+            currentSlide += direction;
+            if (currentSlide < 1) currentSlide = 1;
+            if (currentSlide > totalSlides) currentSlide = totalSlides;
+
+            // Resetear carruseles al entrar
+            if (currentSlide === 6 && direction === 1) setCarouselCard(1);
+            if (currentSlide === 6 && direction === -1) setCarouselCard(4);
+            if (currentSlide === 7 && direction === 1) setEnvCard(1);
+            if (currentSlide === 7 && direction === -1) setEnvCard(4);
+
+            renderSlide();
+        }
+
+        // Lógica Carrusel Social (Diapositiva 6)
+        function renderCarousel() {
+            var cards = document.querySelectorAll('.carousel-card');
+            for (var i = 0; i < cards.length; i++) {
+                if ((i + 1) === currentCarouselCard) {
+                    cards[i].classList.add('active');
+                } else {
+                    cards[i].classList.remove('active');
+                }
+            }
+            for (var j = 1; j <= totalCarouselCards; j++) {
+                var dot = document.getElementById('dot-' + j);
+                if (dot) {
+                    dot.className = (j === currentCarouselCard) ? 'w-3 h-3 rounded-full bg-[#3FA637] transition-all scale-125' : 'w-3 h-3 rounded-full bg-white/30 transition-all';
+                }
+            }
+            var idxCounter = document.getElementById('carouselCardIdx');
+            if (idxCounter) idxCounter.innerText = currentCarouselCard;
+        }
+
+        function navigateCarousel(dir) {
+            currentCarouselCard += dir;
+            if (currentCarouselCard > totalCarouselCards) {
+                currentSlide = 7;
+                setEnvCard(1);
+                renderSlide();
+                return;
+            }
+            if (currentCarouselCard < 1) {
+                currentSlide = 5;
+                renderSlide();
+                return;
+            }
+            renderCarousel();
+        }
+
+        function setCarouselCard(num) {
+            currentCarouselCard = num;
+            renderCarousel();
+        }
+
+        // Lógica Carrusel Ambiental (Diapositiva 7)
+        function renderEnvCarousel() {
+            var envCards = document.querySelectorAll('.carousel-card-env');
+            for (var i = 0; i < envCards.length; i++) {
+                if ((i + 1) === currentEnvCard) {
+                    envCards[i].classList.add('active');
+                } else {
+                    envCards[i].classList.remove('active');
+                }
+            }
+            for (var j = 1; j <= totalEnvCards; j++) {
+                var envDot = document.getElementById('env-dot-' + j);
+                if (envDot) {
+                    envDot.className = (j === currentEnvCard) ? 'w-3 h-3 rounded-full bg-emerald-400 transition-all scale-125' : 'w-3 h-3 rounded-full bg-white/30 transition-all';
+                }
+            }
+            var envIdxCounter = document.getElementById('envCardIdx');
+            if (envIdxCounter) envIdxCounter.innerText = currentEnvCard;
+        }
+
+        function navigateEnvCarousel(dir) {
+            currentEnvCard += dir;
+            if (currentEnvCard > totalEnvCards) {
+                currentSlide = 8;
+                renderSlide();
+                return;
+            }
+            if (currentEnvCard < 1) {
+                currentSlide = 6;
+                setCarouselCard(4);
+                renderSlide();
+                return;
+            }
+            renderEnvCarousel();
+        }
+
+        function setEnvCard(num) {
+            currentEnvCard = num;
+            renderEnvCarousel();
+        }
+
+        // Navegación con Teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                navigateSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                navigateSlide(-1);
+            }
+        });
+
+        window.onload = function() {
+            renderSlide();
+            renderCarousel();
+            renderEnvCarousel();
+        };
+    </script>
+</body>
+</html>
